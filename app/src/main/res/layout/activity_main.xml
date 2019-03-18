@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="50dp"
+    android:orientation="vertical"
+    android:background="@drawable/bg">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Automate Your Attendance"
+        android:textColor="#fff"
+        android:textSize="40sp"
+        android:layout_marginTop="70dp"
+        android:textAllCaps="true"/>
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log In"
+        android:textColor="#fff"
+        android:textAllCaps="false"
+        android:background="@drawable/roundedbtn"
+        android:textSize="24sp"
+        android:layout_above="@+id/signup"
+        android:layout_marginBottom="10dp"
+        android:onClick="login" />
+
+    <TextView
+        android:id="@+id/signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New here, Sign Up"
+        android:textColor="#fff"
+        android:textSize="14sp"
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:onClick="signup" />
+
+</RelativeLayout>
