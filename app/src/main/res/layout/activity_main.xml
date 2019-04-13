@@ -25,7 +25,7 @@
         android:textColor="#fff"
         android:textAllCaps="false"
         android:background="@drawable/roundedbtn"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:layout_above="@+id/signup"
         android:layout_marginBottom="10dp"
         android:onClick="login" />
