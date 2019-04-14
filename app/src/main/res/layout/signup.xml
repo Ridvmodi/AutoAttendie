@@ -21,36 +21,43 @@
         android:textColor="#fff"
         android:layout_marginBottom="30dp"
         />
+
     <EditText
+        android:id="@+id/enter_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:hint="Enter Id"
-        android:textColorHint="#fff"
-        android:layout_marginBottom="10dp"
         android:paddingBottom="15dp"
-        android:textColor="#fff"/>
+        android:textColor="#fff"
+        android:textColorHint="#fff" />
+
     <EditText
+        android:id="@+id/enter_password1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:hint="Enter PassWord"
-        android:textColorHint="#fff"
-        android:layout_marginBottom="10dp"
         android:paddingBottom="15dp"
+        android:password="true"
         android:textColor="#fff"
-        android:password="true"/>
+        android:textColorHint="#fff" />
+
     <EditText
+        android:id="@+id/enter_password2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Confirm PassWord"
-        android:textColorHint="#fff"
         android:layout_marginBottom="40dp"
+        android:hint="Confirm PassWord"
         android:paddingBottom="15dp"
+        android:password="true"
         android:textColor="#fff"
-        android:password="true"/>
+        android:textColorHint="#fff" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/signup"
         android:background="@drawable/roundedbtn"
         android:text="Sign Up"/>
     <TextView
