@@ -38,6 +38,7 @@
         android:textColorHint="#fff"
         android:paddingBottom="15dp"
         android:textColor="#fff"
+        android:password="true"
         />
     <TextView
         android:id="@+id/forget"
@@ -49,6 +50,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginBottom="80dp"
         android:gravity="center_horizontal"
+        android:onClick="forgetPass"
         />
     <Button
         android:id="@+id/login_btn"

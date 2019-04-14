@@ -28,4 +28,8 @@ public class Login extends Activity {
         startActivity(signup);
     }
 
+    public void forgetPass(View view) {
+        Intent forget = new Intent(this, ForgetPassWord.class);
+        startActivity(forget);
+    }
 }

@@ -14,8 +14,10 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import android.app.Activity;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
-public class AttendanceChart extends Activity {
+public class AttendanceChart extends AppCompatActivity {
     BarChart chart;
     ArrayList<BarEntry> entries = new ArrayList<>();;
     ArrayList<String> BarEntryLabels = new ArrayList<>();;
@@ -25,6 +27,9 @@ public class AttendanceChart extends Activity {
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attendance_chart);
+        android.support.v7.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Attendance Chart");
+        setSupportActionBar(toolbar);
         chart = findViewById(R.id.chart1);
         AddValuesToBARENTRY();
         AddValuesToBarEntryLabels();

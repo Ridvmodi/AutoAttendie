@@ -85,15 +85,12 @@ public class Home extends AppCompatActivity
             Intent intent = new Intent(Home.this, AttendanceChart.class);
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
+            Intent intent = new Intent(Home.this, AllSubjects.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_send) {
-
+            Intent intent = new Intent(this, FeedBack.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
