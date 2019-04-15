@@ -35,10 +35,18 @@ public class SignUp extends Activity {
                     {
                         LoginDB db= new LoginDB(SignUp.this);
                         db.open();
-                            db.createEntry(Id.getText().toString().trim(), password1.getText().toString());
-                        Toast.makeText(SignUp.this, "Account created", Toast.LENGTH_SHORT).show();
+                            if(!db.checkForDuplicate(Id.getText().toString().trim())) {
+                                db.createEntry(Id.getText().toString().trim(), password1.getText().toString());
+                                Toast.makeText(SignUp.this, "Account created", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUp.this, "Account created", Toast.LENGTH_SHORT).show();
+                                login(v);
+                            }
+                            else
+                            {
+                                Toast.makeText(SignUp.this, "Id Already Exists", Toast.LENGTH_SHORT).show();
+                            }
                         db.close();
-                        login(v);
+
                     }
                     else
                         Toast.makeText(SignUp.this, "Password Does not match", Toast.LENGTH_SHORT).show();

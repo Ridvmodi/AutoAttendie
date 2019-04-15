@@ -126,4 +126,19 @@ public class LoginDB {
         c.close();
         return null;
     }
+
+    public Boolean checkForDuplicate(String name) {
+        String[] columns = new String[]{KEY_ROWID, KEY_ID, KEY_PASSWORD};
+        Cursor c = ourDatabase.query(DATABASE_TABLE, columns, null, null, null, null, null);
+        int iRowID = c.getColumnIndex(KEY_ROWID);
+        int iId = c.getColumnIndex(KEY_ID);
+        int iPassword = c.getColumnIndex(KEY_PASSWORD);
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            if (name.equals(c.getString(iId))) {
+               return true;
+            }
+        }
+        c.close();
+        return false;
+    }
 }
