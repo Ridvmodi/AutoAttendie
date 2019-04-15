@@ -51,7 +51,7 @@ public class LoginDB {
     {
         ourHelper  = new DBHelper(ourContext);
         ourDatabase = ourHelper.getWritableDatabase();
-        return  this;
+        return this;
     }
 
     public void close()

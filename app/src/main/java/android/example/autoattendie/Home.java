@@ -28,7 +28,7 @@ public class Home extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Notified Your Teacher", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -49,7 +49,7 @@ public class Home extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+//            super.onBackPressed();
         }
     }
 
@@ -90,6 +90,9 @@ public class Home extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
             Intent intent = new Intent(this, FeedBack.class);
+            startActivity(intent);
+        } else if(id == R.id.logout) {
+            Intent intent = new Intent(this, Login.class);
             startActivity(intent);
         }
 

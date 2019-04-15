@@ -44,7 +44,7 @@ public class SignUp extends Activity {
                         Toast.makeText(SignUp.this, "Password Does not match", Toast.LENGTH_SHORT).show();
                 }
                 else
-                    Toast.makeText(SignUp.this, "Check your Details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUp.this, "All Fields are Required", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -52,5 +52,10 @@ public class SignUp extends Activity {
     public void login(View view) {
         Intent login = new Intent(this, Login.class);
         startActivity(login);
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
