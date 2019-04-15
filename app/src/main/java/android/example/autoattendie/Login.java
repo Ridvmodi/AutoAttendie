@@ -3,6 +3,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,14 +25,16 @@ public class Login extends Activity {
             public void onClick(View v) {
                 LoginDB db=new LoginDB(Login.this);
                 db.open();
-                    if(id.getText().toString().isEmpty() && password.getText().toString().isEmpty())
-                        Toast.makeText(Login.this, "Wrong Id or Password", Toast.LENGTH_SHORT).show();
+                    if(id.getText().toString().isEmpty() || password.getText().toString().isEmpty())
+                        Toast.makeText(Login.this, "All Fields are Required", Toast.LENGTH_SHORT).show();
                     else
                     {
                         Person n=db.checkLonginDetails(id.getText().toString().trim(),password.getText().toString().trim());
                         if(n!=null) {
                             Intent intent = new Intent(Login.this, Home.class);
                             startActivity(intent);
+                        } else {
+                            Toast.makeText(Login.this, "Wrong Credentials", Toast.LENGTH_SHORT).show();
                         }
                     }
                 db.close();
@@ -50,4 +54,9 @@ public class Login extends Activity {
         startActivity(forget);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 }
