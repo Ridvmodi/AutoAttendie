@@ -30,6 +30,7 @@ public class Home extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        String name=getStr
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +132,7 @@ public class Home extends AppCompatActivity
             Intent intent = new Intent(this, FeedBack.class);
             startActivity(intent);
         } else if(id == R.id.logout) {
-            Intent intent = new Intent(this, Login.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
 
