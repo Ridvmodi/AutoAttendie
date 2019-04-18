@@ -1,9 +1,11 @@
 package android.example.autoattendie;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,22 +17,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.github.sundeepk.compactcalendarview.domain.Event;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
-
+    TextView loginname;
+    CompactCalendarView compactCalendarView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        String name=getStr
+        String name=getIntent().getStringExtra("name");
+        compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
+        //loginname=(TextView)findViewById(R.id.loginname);
+        //loginname.setText(name);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -38,6 +53,41 @@ public class Home extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Notified Your Teacher", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+
+        // Set first day of week to Monday, defaults to Monday so calling setFirstDayOfWeek is not necessary
+        // Use constants provided by Java Calendar class
+        compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
+
+        // Add event 1 on Sun, 07 Jun 2015 18:20:51 GMT
+        Event ev1 = new Event(Color.GREEN, changeToLongDate("17/04/19"), "Some extra data that I want to store.");
+        compactCalendarView.addEvent(ev1);
+
+        // Added event 2 GMT: Sun, 07 Jun 2015 19:10:51 GMT
+        Event ev2 = new Event(Color.GREEN, 1433704251000L);
+        compactCalendarView.addEvent(ev2);
+
+        // Query for events on Sun, 07 Jun 2015 GMT.
+        // Time is not relevant when querying for events, since events are returned by day.
+        // So you can pass in any arbitary DateTime and you will receive all events for that day.
+        List<Event> events = compactCalendarView.getEvents(1433701251000L); // can also take a Date object
+
+        // events has size 2 with the 2 events inserted previously
+       // Log.d(TAG, "Events: " + events);
+
+        // define a listener to receive callbacks when certain events happen.
+        compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+            @Override
+            public void onDayClick(Date dateClicked) {
+                List<Event> events = compactCalendarView.getEvents(dateClicked);
+         //       Log.d(TAG, "Day was clicked: " + dateClicked + " with events " + events);
+            }
+
+            @Override
+            public void onMonthScroll(Date firstDayOfNewMonth) {
+           //     Log.d(TAG, "Month was scrolled to: " + firstDayOfNewMonth);
             }
         });
 
@@ -139,5 +189,18 @@ public class Home extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    long changeToLongDate(String dateString)
+    {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = sdf.parse(dateString);
+
+            return  date.getTime();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 100000;
     }
 }

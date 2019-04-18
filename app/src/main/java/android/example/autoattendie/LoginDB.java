@@ -111,7 +111,7 @@ public class LoginDB {
         return -1;
     }
 
-    public Person checkLonginDetails(String name,String password) {
+    public String checkLonginDetails(String name,String password) {
         String[] columns = new String[]{KEY_ROWID, KEY_ID, KEY_PASSWORD};
         Cursor c = ourDatabase.query(DATABASE_TABLE, columns, null, null, null, null, null);
         int iRowID = c.getColumnIndex(KEY_ROWID);
@@ -119,8 +119,7 @@ public class LoginDB {
         int iPassword = c.getColumnIndex(KEY_PASSWORD);
         for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
             if (name.equals(c.getString(iId)) && password.equals(c.getString(iPassword))) {
-                Person p = new Person(c.getString(iId), c.getString(iPassword));
-                return p;
+                return c.getString(iId);
             }
         }
         c.close();
