@@ -29,9 +29,10 @@ public class Login extends Activity {
                         Toast.makeText(Login.this, "All Fields are Required", Toast.LENGTH_SHORT).show();
                     else
                     {
-                        Person n=db.checkLonginDetails(id.getText().toString().trim(),password.getText().toString().trim());
+                        String n=db.checkLonginDetails(id.getText().toString().trim(),password.getText().toString().trim());
                         if(n!=null) {
                             Intent intent = new Intent(Login.this, Home.class);
+                            intent.putExtra("name",n);
                             startActivity(intent);
                         } else {
                             Toast.makeText(Login.this, "Wrong Credentials", Toast.LENGTH_SHORT).show();
