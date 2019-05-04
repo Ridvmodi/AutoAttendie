@@ -1,7 +1,9 @@
 package android.example.autoattendie;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,12 +27,19 @@ import android.widget.Toast;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.sql.Timestamp;
+
+import androidx.annotation.RequiresApi;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
@@ -59,23 +68,9 @@ public class Home extends AppCompatActivity
 
         // Set first day of week to Monday, defaults to Monday so calling setFirstDayOfWeek is not necessary
         // Use constants provided by Java Calendar class
-        compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
+        compactCalendarView.setFirstDayOfWeek(Calendar.SUNDAY);
 
-        // Add event 1 on Sun, 07 Jun 2015 18:20:51 GMT
-        Event ev1 = new Event(Color.GREEN, changeToLongDate("17/04/19"), "Some extra data that I want to store.");
-        compactCalendarView.addEvent(ev1);
-
-        // Added event 2 GMT: Sun, 07 Jun 2015 19:10:51 GMT
-        Event ev2 = new Event(Color.GREEN, 1433704251000L);
-        compactCalendarView.addEvent(ev2);
-
-        // Query for events on Sun, 07 Jun 2015 GMT.
-        // Time is not relevant when querying for events, since events are returned by day.
-        // So you can pass in any arbitary DateTime and you will receive all events for that day.
-        List<Event> events = compactCalendarView.getEvents(1433701251000L); // can also take a Date object
-
-        // events has size 2 with the 2 events inserted previously
-       // Log.d(TAG, "Events: " + events);
+        changeToLongDate("22/04/2019 23:12:52 UTC");
 
         // define a listener to receive callbacks when certain events happen.
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
@@ -190,17 +185,16 @@ public class Home extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    long changeToLongDate(String dateString)
+    void changeToLongDate(String dateString)
     {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date date = sdf.parse(dateString);
 
-            return  date.getTime();
-
-        } catch (ParseException e) {
+             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss zzz");
+             Date date = sdf.parse(dateString);
+             Event ev1 = new Event(Color.BLACK,date.getTime(), "Some extra data that I want to store.");
+             compactCalendarView.addEvent(ev1);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return 100000;
     }
 }
