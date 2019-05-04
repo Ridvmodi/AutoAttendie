@@ -43,7 +43,7 @@ import androidx.annotation.RequiresApi;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
-    TextView loginname;
+    public static TextView loginname;
     CompactCalendarView compactCalendarView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class Home extends AppCompatActivity
         setSupportActionBar(toolbar);
         String name=getIntent().getStringExtra("name");
         compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
-        //loginname=(TextView)findViewById(R.id.loginname);
+        loginname=(TextView)findViewById(R.id.loginname);
         //loginname.setText(name);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
