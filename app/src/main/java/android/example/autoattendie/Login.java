@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +33,7 @@ public class Login extends Activity {
                         String n=db.checkLonginDetails(id.getText().toString().trim(),password.getText().toString().trim());
                         if(n!=null) {
                             Intent intent = new Intent(Login.this, Home.class);
-                            intent.putExtra("name",n);
+                            intent.putExtra("id",n);
                             startActivity(intent);
                         } else {
                             Toast.makeText(Login.this, "Wrong Credentials", Toast.LENGTH_SHORT).show();

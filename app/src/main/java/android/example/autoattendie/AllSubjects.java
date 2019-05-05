@@ -18,7 +18,9 @@ public class AllSubjects extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
     public void changePage(View v) {
+        String id = getResources().getResourceEntryName((v.getId()));
         Intent intent = new Intent(this, SubjectInfo.class);
+        intent.putExtra("id", id);
         startActivity(intent);
     }
 }
