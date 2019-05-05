@@ -6,11 +6,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@android:drawable/ic_menu_sort_by_size"
             android:title="Attendance Chart" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@android:drawable/ic_input_get"
             android:title="All Subjects" />
     </group>
 
@@ -22,7 +22,7 @@
                 android:title="FeedBack" />
             <item
                 android:id="@+id/logout"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@android:drawable/ic_lock_lock"
                 android:title="LogOut" />
         </menu>
     </item>

@@ -59,7 +59,7 @@ public class Home extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        String id=getIntent().getStringExtra("id");
+        final String id=getIntent().getStringExtra("id");
         compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
         fetchData details = new fetchData(id);
         details.execute();
@@ -67,7 +67,9 @@ public class Home extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Notified Your Teacher", Snackbar.LENGTH_LONG)
+                fetchData fetchdata = new fetchData(id);
+                fetchdata.execute();
+                Snackbar.make(view, "Data Updated", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
