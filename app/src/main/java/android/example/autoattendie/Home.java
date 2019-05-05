@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -27,6 +28,10 @@ import android.widget.Toast;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,19 +48,21 @@ import androidx.annotation.RequiresApi;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
-    public static TextView loginname;
-    CompactCalendarView compactCalendarView;
+    public static TextView loginname ;
+    static CompactCalendarView compactCalendarView;
+    static JSONObject jsonObject = new JSONObject();
+    static JSONArray jsonArray;
+    private Boolean exit = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        String name=getIntent().getStringExtra("name");
+        String id=getIntent().getStringExtra("id");
         compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
-        loginname=(TextView)findViewById(R.id.loginname);
-        //loginname.setText(name);
-
+        fetchData details = new fetchData(id);
+        details.execute();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,22 +76,6 @@ public class Home extends AppCompatActivity
         // Set first day of week to Monday, defaults to Monday so calling setFirstDayOfWeek is not necessary
         // Use constants provided by Java Calendar class
         compactCalendarView.setFirstDayOfWeek(Calendar.SUNDAY);
-
-        changeToLongDate("22/04/2019 23:12:52 UTC");
-
-        // define a listener to receive callbacks when certain events happen.
-        compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
-            @Override
-            public void onDayClick(Date dateClicked) {
-                List<Event> events = compactCalendarView.getEvents(dateClicked);
-         //       Log.d(TAG, "Day was clicked: " + dateClicked + " with events " + events);
-            }
-
-            @Override
-            public void onMonthScroll(Date firstDayOfNewMonth) {
-           //     Log.d(TAG, "Month was scrolled to: " + firstDayOfNewMonth);
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -101,11 +92,11 @@ public class Home extends AppCompatActivity
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
-        categories.add("Software Eng");
-        categories.add("Dbms");
-        categories.add("Apc");
-        categories.add("Web Development");
-        categories.add("Epics");
+        categories.add("se");
+        categories.add("dbms");
+        categories.add("apc");
+        categories.add("web");
+        categories.add("epics");
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
@@ -120,7 +111,11 @@ public class Home extends AppCompatActivity
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         String item = parent.getItemAtPosition(position).toString();
-
+        try {
+            markAttendance(jsonObject, item);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         // Showing selected spinner item
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
@@ -134,7 +129,13 @@ public class Home extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-//            super.onBackPressed();
+            if (exit) {
+                ActivityCompat.finishAffinity(Home.this);
+            } else {
+                Toast.makeText(this, "Press Back again to Exit.",
+                        Toast.LENGTH_SHORT).show();
+                exit = true;
+            }
         }
     }
 
@@ -185,13 +186,42 @@ public class Home extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    void changeToLongDate(String dateString)
+    static void initJsonObject(JSONObject jsonObject1){
+        jsonObject = jsonObject1;
+        try {
+            markAttendance(jsonObject, "se");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    static void markAttendance(JSONObject jsonObject, String subject) throws JSONException {
+        compactCalendarView.removeAllEvents();
+        String d = "";
+        jsonArray = (JSONArray)jsonObject.get(subject);
+        for(int i = 0;i<jsonArray.length();i++) {
+            if(i < 10) {
+                d = "0";
+            }
+            d += String.valueOf(i+1) + "/05/2019";
+            if(jsonArray.get(i).toString().equals("Present")) {
+                changeToLongDate(d, 1);
+            } else {
+                changeToLongDate(d, 0);
+            }
+        }
+    }
+    static void changeToLongDate(String dateString, int flag)
     {
         try {
 
-             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss zzz");
+             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
              Date date = sdf.parse(dateString);
-             Event ev1 = new Event(Color.BLACK,date.getTime(), "Some extra data that I want to store.");
+             Event ev1;
+             if(flag == 1) {
+                 ev1 = new Event(Color.BLACK,date.getTime(), "Some extra data that I want to store.");
+             } else {
+                 ev1 = new Event(Color.RED, date.getTime(), "Some extra data that I want to store.");
+             }
              compactCalendarView.addEvent(ev1);
         } catch (Exception e) {
             e.printStackTrace();
