@@ -31,12 +31,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <RadioButton
+                android:id="@+id/bug_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#fff"
                 android:text="Bug"
                 android:layout_marginRight="20dp"/>
             <RadioButton
+                android:id="@+id/suggestion_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#fff"
@@ -74,7 +76,7 @@
             android:textSize="18sp"
             android:layout_below="@+id/message"
             android:layout_marginTop="70dp"
-            />
+            android:onClick="submit_req" />
     </RelativeLayout>
 
 </LinearLayout>
